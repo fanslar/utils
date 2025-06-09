@@ -1,21 +1,23 @@
+import type { DateInput } from './type'
 import { ensureDateOrder } from './ensure'
 import { toDate } from './to'
 
 /**
- * 根据出生日期计算当前年龄
- * @param birthDate 出生日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * 计算某一天的年龄
+ * @param birthDate 出生日期，Date() 入参
+ * @param atDate 相对日期 Date() 入参
  * @returns 年龄（周岁）
  */
-export function calcAge(birthDate: Date | string | number): number {
-  return calcYearsDiff(birthDate, new Date())
+export function calcAge(birthDate: DateInput, atDate: DateInput): number {
+  return calcYearsDiff(birthDate, atDate)
 }
 
 /**
  * 计算某天是当年的第几天
- * @param date 日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param date 日期，Date() 入参
  * @returns 第几天（1~366）
  */
-export function calcDayOfYear(date: Date | string | number): number {
+export function calcDayOfYear(date: DateInput): number {
   const d = toDate(date)
   const startOfYear = new Date(d.getFullYear(), 0, 1)
   const diff = d.getTime() - startOfYear.getTime()
@@ -24,13 +26,13 @@ export function calcDayOfYear(date: Date | string | number): number {
 
 /**
  * 计算某天是当年的第几周
- * @param date 日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param date 日期，Date() 入参
  * @param options.firstDayOfWeek 一周的第一天（0=周日，1=周一，...，6=周六），默认1（周一）
  * @param options.firstWeekContainsDay 第1周必须包含的最小天数（如ISO 8601为4，表示第1周必须包含1月4日），默认4
  * @returns 第几周（1~53）
  */
 export function calcWeekOfYear(
-  date: Date | string | number,
+  date: DateInput,
   options?: { firstDayOfWeek?: number, firstWeekContainsDay?: number },
 ): number {
   const d = toDate(date)
@@ -52,31 +54,31 @@ export function calcWeekOfYear(
 
 /**
  * 计算某天是当年的第几月
- * @param date 日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param date 日期，Date() 入参
  * @returns 第几月（0~11）
  */
-export function calcMonthOfYear(date: Date | string | number): number {
+export function calcMonthOfYear(date: DateInput): number {
   const d = toDate(date)
   return d.getMonth()
 }
 
 /**
  * 计算某天是当月的第几天
- * @param date 日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param date 日期，Date() 入参
  * @returns 第几天（1~31）
  */
-export function calcDayOfMonth(date: Date | string | number): number {
+export function calcDayOfMonth(date: DateInput): number {
   const d = toDate(date)
   return d.getDate()
 }
 
 /**
  * 计算某天是当月的第几周
- * @param date 日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param date 日期，Date() 入参
  * @param firstDayOfWeek 一周的第一天（0=周日，1=周一，...，6=周六），默认1（周一）
  * @returns 第几周（1~6）
  */
-export function calcWeekOfMonth(date: Date | string | number, firstDayOfWeek: number = 1): number {
+export function calcWeekOfMonth(date: DateInput, firstDayOfWeek: number = 1): number {
   const d = toDate(date)
   const firstDayOfMonth = new Date(d.getFullYear(), d.getMonth(), 1)
   const firstDayOfWeekOffset = (firstDayOfMonth.getDay() - firstDayOfWeek + 7) % 7
@@ -125,62 +127,62 @@ export function calcDaysInMonth(year: number, month: number): number {
 
 /**
  * 计算两个日期之间的毫秒差
- * @param startDate 起始日期，可以为 Date 类型或可被 Date 构造的字符串/数字
- * @param endDate 结束日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param startDate 起始日期，Date() 入参
+ * @param endDate 结束日期，Date() 入参
  * @returns 毫秒差
  */
-export function calcMillisecondsDiff(startDate: Date | string | number, endDate: Date | string | number): number {
+export function calcMillisecondsDiff(startDate: DateInput, endDate: DateInput): number {
   const [start, end] = ensureDateOrder(startDate, endDate)
   return Math.abs(end.getTime() - start.getTime())
 }
 
 /**
  * 计算两个日期之间的秒数差
- * @param startDate 起始日期，可以为 Date 类型或可被 Date 构造的字符串/数字
- * @param endDate 结束日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param startDate 起始日期，Date() 入参
+ * @param endDate 结束日期，Date() 入参
  * @returns 秒数差
  */
-export function calcSecondsDiff(startDate: Date | string | number, endDate: Date | string | number): number {
+export function calcSecondsDiff(startDate: DateInput, endDate: DateInput): number {
   return Math.floor(calcMillisecondsDiff(startDate, endDate) / 1000)
 }
 
 /**
  * 计算两个日期之间的分钟差
- * @param startDate 起始日期，可以为 Date 类型或可被 Date 构造的字符串/数字
- * @param endDate 结束日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param startDate 起始日期，Date() 入参
+ * @param endDate 结束日期，Date() 入参
  * @returns 分钟差
  */
-export function calcMinutesDiff(startDate: Date | string | number, endDate: Date | string | number): number {
+export function calcMinutesDiff(startDate: DateInput, endDate: DateInput): number {
   return Math.floor(calcSecondsDiff(startDate, endDate) / 60)
 }
 
 /**
  * 计算两个日期之间的小时差
- * @param startDate 起始日期，可以为 Date 类型或可被 Date 构造的字符串/数字
- * @param endDate 结束日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param startDate 起始日期，Date() 入参
+ * @param endDate 结束日期，Date() 入参
  * @returns 小时差
  */
-export function calcHoursDiff(startDate: Date | string | number, endDate: Date | string | number): number {
+export function calcHoursDiff(startDate: DateInput, endDate: DateInput): number {
   return Math.floor(calcMinutesDiff(startDate, endDate) / 60)
 }
 
 /**
  * 计算两个日期之间的天数差
- * @param startDate 起始日期，可以为 Date 类型或可被 Date 构造的字符串/数字
- * @param endDate 结束日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param startDate 起始日期，Date() 入参
+ * @param endDate 结束日期，Date() 入参
  * @returns 天数差
  */
-export function calcDaysDiff(startDate: Date | string | number, endDate: Date | string | number): number {
+export function calcDaysDiff(startDate: DateInput, endDate: DateInput): number {
   return Math.floor(calcHoursDiff(startDate, endDate) / 24)
 }
 
 /**
  * 计算两个日期之间的月数差
- * @param startDate 起始日期，可以为 Date 类型或可被 Date 构造的字符串/数字
- * @param endDate 结束日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param startDate 起始日期，Date() 入参
+ * @param endDate 结束日期，Date() 入参
  * @returns 月数差
  */
-export function calcMonthsDiff(startDate: Date | string | number, endDate: Date | string | number): number {
+export function calcMonthsDiff(startDate: DateInput, endDate: DateInput): number {
   const [start, end] = ensureDateOrder(startDate, endDate)
   let monthsDiff = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth())
   if (end.getDate() < start.getDate()) {
@@ -191,11 +193,11 @@ export function calcMonthsDiff(startDate: Date | string | number, endDate: Date 
 
 /**
  * 计算两个日期之间的年数差
- * @param startDate 起始日期，可以为 Date 类型或可被 Date 构造的字符串/数字
- * @param endDate 结束日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param startDate 起始日期，Date() 入参
+ * @param endDate 结束日期，Date() 入参
  * @returns 年数差
  */
-export function calcYearsDiff(startDate: Date | string | number, endDate: Date | string | number): number {
+export function calcYearsDiff(startDate: DateInput, endDate: DateInput): number {
   const [start, end] = ensureDateOrder(startDate, endDate)
   let yearsDiff = end.getFullYear() - start.getFullYear()
   if (end.getMonth() < start.getMonth() || (end.getMonth() === start.getMonth() && end.getDate() < start.getDate())) {
@@ -206,11 +208,11 @@ export function calcYearsDiff(startDate: Date | string | number, endDate: Date |
 
 /**
  * 计算两个日期之间的时间差
- * @param startDate 起始日期，可以为 Date 类型或可被 Date 构造的字符串/数字
- * @param endDate 结束日期，可以为 Date 类型或可被 Date 构造的字符串/数字
+ * @param startDate 起始日期，Date() 入参
+ * @param endDate 结束日期，Date() 入参
  * @returns 时间差对象，包含年、月、日、小时、分钟、秒
  */
-export function calcTimeDiff(startDate: Date | string | number, endDate: Date | string | number): {
+export function calcTimeDiff(startDate: DateInput, endDate: DateInput): {
   years: number
   months: number
   days: number

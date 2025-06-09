@@ -1,3 +1,5 @@
+import type { DateInput } from './type'
+import { calcAge } from './calc'
 import {
   REGEXP_CHINESE,
   REGEXP_EMAIL,
@@ -63,4 +65,26 @@ export function isChinese(str: string): boolean {
  */
 export function isPassword(str: string): boolean {
   return REGEXP_PASSWORD.test(str)
+}
+
+/**
+ * 判断出生日期在指定日期时是否大于指定年龄
+ * @param age 年龄阈值
+ * @param birthDate 出生日期
+ * @param atDate 判断的参考日期
+ * @returns 是否大于指定年龄
+ */
+export function isOlderThan(age: number, birthDate: DateInput, atDate: DateInput): boolean {
+  return calcAge(birthDate, atDate) > age
+}
+
+/**
+ * 判断出生日期在指定日期时是否小于指定年龄
+ * @param age 年龄阈值
+ * @param birthDate 出生日期
+ * @param atDate 判断的参考日期
+ * @returns 是否小于指定年龄
+ */
+export function isYoungerThan(age: number, birthDate: DateInput, atDate: DateInput): boolean {
+  return calcAge(birthDate, atDate) < age
 }
