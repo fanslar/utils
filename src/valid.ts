@@ -1,5 +1,6 @@
 import type { DateInput } from './type'
 import { calcAge } from './calc'
+import { ensureOrder } from './ensure'
 import {
   REGEXP_CHINESE,
   REGEXP_EMAIL,
@@ -10,6 +11,7 @@ import {
   REGEXP_POSTAL_CODE,
   REGEXP_URL,
 } from './regexp'
+import { toTimestamp } from './to'
 
 /**
  * 校验邮箱
@@ -87,4 +89,34 @@ export function isOlderThan(age: number, birthDate: DateInput, atDate: DateInput
  */
 export function isYoungerThan(age: number, birthDate: DateInput, atDate: DateInput): boolean {
   return calcAge(birthDate, atDate) < age
+}
+
+/**
+ * 判断一个数值是否在指定范围内
+ * @param range 数值范围，包含开始和结束值
+ * @param value 要判断的数值
+ * @returns 是否在范围内
+ */
+export function isInRange(
+  range: [number, number],
+  value: number,
+): boolean {
+  const [min, max] = ensureOrder(...range)
+  return value >= min && value <= max
+}
+
+/**
+ * 判断时间是否在指定时间范围内
+ * @param range 时间范围，包含开始和结束时间
+ * @param timestamp 时间戳
+ * @returns 是否在范围内
+ */
+export function isTimeInRange(
+  range: [DateInput, DateInput],
+  timestamp: DateInput,
+): boolean {
+  return isInRange(
+    range.map(toTimestamp) as [number, number],
+    toTimestamp(timestamp),
+  )
 }

@@ -27,6 +27,7 @@ export function calcDayOfYear(date: DateInput): number {
 /**
  * 计算某天是当年的第几周
  * @param date 日期，Date() 入参
+ * @param options 选项对象
  * @param options.firstDayOfWeek 一周的第一天（0=周日，1=周一，...，6=周六），默认1（周一）
  * @param options.firstWeekContainsDay 第1周必须包含的最小天数（如ISO 8601为4，表示第1周必须包含1月4日），默认4
  * @returns 第几周（1~53）

@@ -28,6 +28,7 @@
     "build": "unbuild",
     "dev": "unbuild --stub",
     "lint": "eslint",
+    "fix": "eslint --fix",
     "prepublishOnly": "nr build",
     "release": "bumpp && pnpm publish",
     "start": "tsx src/index.ts",
