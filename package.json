@@ -1,5 +1,5 @@
 {
-  "name": "utils",
+  "name": "@fanslar/utils",
   "type": "module",
   "version": "0.0.3",
   "packageManager": "pnpm@10.12.1",
@@ -30,7 +30,7 @@
     "lint": "eslint",
     "fix": "eslint --fix",
     "prepublishOnly": "nr build",
-    "release": "bumpp && pnpm publish",
+    "release": "bumpp && pnpm publish --access public",
     "start": "tsx src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
