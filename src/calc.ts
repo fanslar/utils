@@ -9,7 +9,7 @@ import { toDate } from './to'
  * @returns 年龄（周岁）
  */
 export function calcAge(birthDate: DateInput, atDate: DateInput): number {
-  return calcYearsDiff(birthDate, atDate)
+  return calcDiffYears(birthDate, atDate)
 }
 
 /**
@@ -132,7 +132,7 @@ export function calcDaysInMonth(year: number, month: number): number {
  * @param endDate 结束日期，Date() 入参
  * @returns 毫秒差
  */
-export function calcMillisecondsDiff(startDate: DateInput, endDate: DateInput): number {
+export function calcDiffMilliseconds(startDate: DateInput, endDate: DateInput): number {
   const [start, end] = ensureDateOrder(startDate, endDate)
   return Math.abs(end.getTime() - start.getTime())
 }
@@ -143,8 +143,8 @@ export function calcMillisecondsDiff(startDate: DateInput, endDate: DateInput): 
  * @param endDate 结束日期，Date() 入参
  * @returns 秒数差
  */
-export function calcSecondsDiff(startDate: DateInput, endDate: DateInput): number {
-  return Math.floor(calcMillisecondsDiff(startDate, endDate) / 1000)
+export function calcDiffSeconds(startDate: DateInput, endDate: DateInput): number {
+  return Math.floor(calcDiffMilliseconds(startDate, endDate) / 1000)
 }
 
 /**
@@ -153,8 +153,8 @@ export function calcSecondsDiff(startDate: DateInput, endDate: DateInput): numbe
  * @param endDate 结束日期，Date() 入参
  * @returns 分钟差
  */
-export function calcMinutesDiff(startDate: DateInput, endDate: DateInput): number {
-  return Math.floor(calcSecondsDiff(startDate, endDate) / 60)
+export function calcDiffMinutes(startDate: DateInput, endDate: DateInput): number {
+  return Math.floor(calcDiffSeconds(startDate, endDate) / 60)
 }
 
 /**
@@ -163,8 +163,8 @@ export function calcMinutesDiff(startDate: DateInput, endDate: DateInput): numbe
  * @param endDate 结束日期，Date() 入参
  * @returns 小时差
  */
-export function calcHoursDiff(startDate: DateInput, endDate: DateInput): number {
-  return Math.floor(calcMinutesDiff(startDate, endDate) / 60)
+export function calcDiffHours(startDate: DateInput, endDate: DateInput): number {
+  return Math.floor(calcDiffMinutes(startDate, endDate) / 60)
 }
 
 /**
@@ -173,8 +173,8 @@ export function calcHoursDiff(startDate: DateInput, endDate: DateInput): number 
  * @param endDate 结束日期，Date() 入参
  * @returns 天数差
  */
-export function calcDaysDiff(startDate: DateInput, endDate: DateInput): number {
-  return Math.floor(calcHoursDiff(startDate, endDate) / 24)
+export function calcDiffDays(startDate: DateInput, endDate: DateInput): number {
+  return Math.floor(calcDiffHours(startDate, endDate) / 24)
 }
 
 /**
@@ -183,7 +183,7 @@ export function calcDaysDiff(startDate: DateInput, endDate: DateInput): number {
  * @param endDate 结束日期，Date() 入参
  * @returns 月数差
  */
-export function calcMonthsDiff(startDate: DateInput, endDate: DateInput): number {
+export function calcDiffMonths(startDate: DateInput, endDate: DateInput): number {
   const [start, end] = ensureDateOrder(startDate, endDate)
   let monthsDiff = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth())
   if (end.getDate() < start.getDate()) {
@@ -198,7 +198,7 @@ export function calcMonthsDiff(startDate: DateInput, endDate: DateInput): number
  * @param endDate 结束日期，Date() 入参
  * @returns 年数差
  */
-export function calcYearsDiff(startDate: DateInput, endDate: DateInput): number {
+export function calcDiffYears(startDate: DateInput, endDate: DateInput): number {
   const [start, end] = ensureDateOrder(startDate, endDate)
   let yearsDiff = end.getFullYear() - start.getFullYear()
   if (end.getMonth() < start.getMonth() || (end.getMonth() === start.getMonth() && end.getDate() < start.getDate())) {
@@ -213,7 +213,7 @@ export function calcYearsDiff(startDate: DateInput, endDate: DateInput): number 
  * @param endDate 结束日期，Date() 入参
  * @returns 时间差对象，包含年、月、日、小时、分钟、秒
  */
-export function calcTimeDiff(startDate: DateInput, endDate: DateInput): {
+export function calcDiffTime(startDate: DateInput, endDate: DateInput): {
   years: number
   months: number
   days: number
