@@ -133,7 +133,7 @@ export function calcDaysInMonth(year: number, month: number): number {
  * @returns 毫秒差
  */
 export function calcDiffMilliseconds(startDate: DateInput, endDate: DateInput): number {
-  const [start, end] = ensureDateOrder(startDate, endDate)
+  const [start, end] = ensureDateOrder([startDate, endDate])
   return Math.abs(end.getTime() - start.getTime())
 }
 
@@ -184,7 +184,7 @@ export function calcDiffDays(startDate: DateInput, endDate: DateInput): number {
  * @returns 月数差
  */
 export function calcDiffMonths(startDate: DateInput, endDate: DateInput): number {
-  const [start, end] = ensureDateOrder(startDate, endDate)
+  const [start, end] = ensureDateOrder([startDate, endDate])
   let monthsDiff = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth())
   if (end.getDate() < start.getDate()) {
     monthsDiff--
@@ -199,7 +199,7 @@ export function calcDiffMonths(startDate: DateInput, endDate: DateInput): number
  * @returns 年数差
  */
 export function calcDiffYears(startDate: DateInput, endDate: DateInput): number {
-  const [start, end] = ensureDateOrder(startDate, endDate)
+  const [start, end] = ensureDateOrder([startDate, endDate])
   let yearsDiff = end.getFullYear() - start.getFullYear()
   if (end.getMonth() < start.getMonth() || (end.getMonth() === start.getMonth() && end.getDate() < start.getDate())) {
     yearsDiff--
@@ -221,7 +221,7 @@ export function calcDiffTime(startDate: DateInput, endDate: DateInput): {
   minutes: number
   seconds: number
 } {
-  const [start, end] = ensureDateOrder(startDate, endDate)
+  const [start, end] = ensureDateOrder([startDate, endDate])
 
   let years = end.getFullYear() - start.getFullYear()
   let months = end.getMonth() - start.getMonth()
