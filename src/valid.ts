@@ -165,3 +165,20 @@ export const isTimeBetween = isTimeInRange
 export const isDateBetween = isTimeInRange
 export const isDateTimeBetween = isTimeInRange
 export const isTimestampBetween = isTimeInRange
+
+/**
+ * 判断当前时间是否在指定时间范围内
+ * @param {DateInput} range - 时间范围，必须为长度为2的元组
+ * @returns {boolean} 是否在范围内
+ * @throws {Error} 当 range 长度不为2时抛出
+ */
+export function isNowInRange(
+  range: [DateInput, DateInput],
+): boolean {
+  return isTimeInRange(Date.now(), range)
+}
+
+/**
+ * isNowInRange 别名，判断当前时间是否在指定范围内
+ */
+export const isNowBetween = isNowInRange
